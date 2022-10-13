@@ -24,6 +24,7 @@
 
 [Ресурсы, необходимые для реализации проекта]
 - Python
+- HTML/CSS/JavaScript
 - Django
 - Postgres
 
