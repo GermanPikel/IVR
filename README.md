@@ -11,7 +11,7 @@ VK: https://vk.com/axaaxaxaaxaxaxax
 
 [Аппаратные требования]
 
-  Браузеры и их версии:
+  Браузеры/ОС и их версии:
   - Chrome >= 45
   - Firefox >= 38
   - Edge >= 12
