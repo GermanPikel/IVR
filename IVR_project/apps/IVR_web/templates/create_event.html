@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="create_form">
+        <p class="create_logo">ДОБАВИТЬ СОБЫТИЕ</p>
+        <form action="#" method="post">
+            <div class="create_inputs">
+                <p>Название <span class="redcol">*</span></p>
+                <input type="text">
+            </div>
+            <div class="create_inputs">
+                <p>Фотография <span class="redcol">*</span></p>
+                <input type="file">
+            </div>
+            <div class="create_inputs dates">
+                <div class="create_inputs date">
+                <div class="date">
+                    <p>День начала:</p>
+                    <select class="create-selector">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+                <div class="date">
+                    <p>Месяц начала:</p>
+                    <select class="create-selector">
+                        <option>Январь</option>
+                        <option>Февраль</option>
+                        <option>Март</option>
+                    </select>
+                </div>
+                <div class="date">
+                    <p>Год начала <span class="redcol">*</span></p>
+                    <input type="number">
+                </div>
+            </div>
+                <div class="create_inputs date">
+                <div class="date">
+                    <p>День окончания:</p>
+                    <select class="create-selector">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+                <div class="date">
+                    <p>Месяц окончания:</p>
+                    <select class="create-selector">
+                        <option>Январь</option>
+                        <option>Февраль</option>
+                        <option>Март</option>
+                    </select>
+                </div>
+                <div class="date">
+                    <p>Год окончания</p>
+                    <input type="number">
+                </div>
+            </div>
+            </div>
+            <div class="create_inputs">
+                <p>Описание <span class="redcol">*</span></p>
+                <textarea></textarea>
+            </div>
+            <div class="submit_feedback">
+                <input type="submit" value="Сохранить и добавить ещё">
+            </div>
+            <div class="submit_feedback">
+                <input type="submit" value="Сохранить и выйти">
+            </div>
+        </form>
+    </div>
+{% endblock %}

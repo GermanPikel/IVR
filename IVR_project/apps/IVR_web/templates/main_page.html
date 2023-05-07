@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block hero %}
+    <div class="hero">
+        <div class="hero-logo">
+            histline.
+        </div>
+        <div class="hero-description">
+            Тайм-лайн ключевых дат и событий для подготовки к ЕГЭ по истории.
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="tl-navigate">
+        <div class="tl_choose">Выберите тайм-лайн</div>
+            <div class="tl_types">
+                <div class="tl_type"><a href="{% url 'home' %}">Сжатый</a></div>
+                <div class="tl_type"><a>Подробный</a></div>
+            </div>
+    </div>
+    <div class="timeline-area">
+        <div class="timeline-content">
+            {% for tl in timelines %}
+                <div class="tl-card">
+                    <img src="{{ tl.photo.url }}">
+                    <h2>{{ tl.name }}</h2>
+                    <h3>{{ tl.date_start }} - {{ tl.date_end }}</h3>
+                    <div class="tl_desc">{{ tl.content|linebreaks|truncatewords:80 }}</div>
+                    <span><a href="{{ tl.get_absolute_url }}">Читать далее  →</a></span>
+                </div>
+            {% endfor %}
+            <!-- <div class="tl-card">
+                <img src="/static/IVR_static/img/bitva_2.jpg">
+                <h2>Столетняя война</h2>
+                <h3>1337 - 1453</h3>
+                <div>{% lorem 50 w %}</div>
+                <span><a href="{#  #} url 'open_timeline' %}">Читать далее  →</a></span>
+            </div>
+            <div class="tl-card">
+                <img src="/static/IVR_static/img/sev_war.jpeg">
+                <h2>Северная война</h2>
+                <h3>1700 - 1721</h3>
+                <div>{% lorem 50 w %}</div>
+                <span><a href="{#  #} url 'open_timeline' %}">Читать далее  →</a></span>
+            </div>
+            <div class="tl-card">
+                <img src="/static/IVR_static/img/per_war.jpg">
+                <h2>Первая мировая</h2>
+                <h3>1914 - 1918</h3>
+                <div>{% lorem 50 w %}</div>
+                <span><a href="{#  #} url 'open_timeline' %}">Читать далее  →</a></span>
+            </div>  -->
+        </div>
+    </div>
+{% endblock %}

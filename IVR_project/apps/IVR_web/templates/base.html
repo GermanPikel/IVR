@@ -1,0 +1,76 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>histline.</title>
+    <link type="text/css" rel="stylesheet" href="{% static "IVR_static/css/styles.css" %}">
+</head>
+<body>
+    <header class="header-bar">
+        <div class="logo_text"><a href="{% url 'home' %}">histline.</a></div>
+        <nav>
+            <ul class="main_nav">
+                <li><input class="search" placeholder="Поиск"></li> <!--<button>🔍</button>-->
+                <li><select class="search_selector">
+                        <option>Год</option>
+                        <option>Событие</option>
+                        <option>Пользователь</option>
+                        <option>Правитель/Исторический деятель</option>
+                    </select>
+                </li>
+            </ul>
+        </nav>
+        <div class="user_interaction">
+            {% if user_ %}
+                <a class="button_lrl" href="{% url 'profile' %}"><button>{{ user.username }}</button></a>
+                <a class="button_lrl" href="{% url 'logout' %}"><button>Выйти</button></a>
+            {% else %}
+                <a class="button_lrl" href="{% url 'registration' %}"><button>Зарегистрироваться</button></a>
+                <a class="button_lrl" href="{% url 'login' %}"><button>Войти</button></a>
+            {% endif %}
+        </div>
+    </header>
+    {% block hero %}
+    {% endblock %}
+    <div class="container">
+        <div class="container-content">
+           {% block content %}
+           {% endblock %}
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="contact_form">
+                <div class="feedback_main_text">Обратная связь</div>
+                <div class="feedback_text">Здесь вы можете указать на ошибки, предложить свой вариант
+                их исправления или просто поблагодарить автора сайта.</div>
+                <form action="#" method="post">
+                    <div class="form_inputs">
+                        <div class="input_block">
+                            <p>Ваш email <span class="redcol">*</span></p>
+                            <input type="text">
+                        </div>
+                        <div class="input_block">
+                            <p>Тема <span class="redcol">*</span></p>
+                            <input type="text">
+                         </div>
+                    </div>
+                    <p>Описание <span class="redcol">*</span></p>
+                    <textarea name="text"></textarea>
+                    <div class="submit_feedback">
+                        <input type="submit" value="Отправить">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="page_bottom">
+
+        </div>
+    </footer>
+</body>
+<script rel="script" src="{% static 'js/jquery.min.js' %}"></script>
+<script rel="script" src="{% static 'js/main.js' %}"></script>
+</html>

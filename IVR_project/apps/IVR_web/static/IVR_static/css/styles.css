@@ -1,0 +1,503 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f2;
+    font-family: "Montserrat", sans-serif;
+}
+
+body {
+    position: relative;
+}
+
+.logo_text a {
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 8%;
+    text-decoration: none;
+    border-bottom: solid 1px black;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    max-height: 100px;
+    z-index: 100;
+}
+
+.header-bar {
+
+}
+
+.logo_text {
+    font-weight: 590;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.main_nav {
+    list-style: none;
+}
+
+.main_nav li {
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.button_lrl button{
+    padding: 9px 15px;
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.search, .search_selector {
+    border: solid 1px black;
+    border-radius: 50px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+    border: solid 1px black;
+}
+
+.container {
+    padding: 30px 10%;
+}
+
+.container:first-of-type {
+    margin-top: 100px;
+}
+
+.container-content{
+
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+    background: url("../img/Battle_of_Leipzig_by_Zauerweid.jpg");
+    max-width: 100%;
+    background-size: cover;
+    margin-top: 100px;
+    border-bottom: solid 1px #dedede;
+}
+
+.hero-logo {
+    padding: 5%;
+    font-size: 80px;
+    font-weight: 800;
+    background: none;
+}
+
+.hero-description {
+    padding: 5%;
+    font-size: 20px;
+    background: none;
+    text-align: center;
+}
+
+footer {
+    border-top: solid 1px #dedede;
+}
+
+.contact_form {
+    padding: 2%;
+}
+
+.redcol {
+    color: red;
+}
+
+.feedback_main_text {
+    font-size: 60px;
+    font-weight: 600;
+    text-align: center;
+    padding: 1% 0;
+}
+
+.feedback_text {
+    text-align: center;
+    padding: 1% 0;
+    font-size: 18px;
+}
+
+form {
+    margin: 3% 0;
+    color: #636363;
+}
+
+.form_inputs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5%;
+}
+
+.input_block {
+    width: 50%;
+}
+
+.input_block:first-of-type {
+    margin-right: 10%;
+}
+
+.form_inputs input {
+    margin-bottom: 2%;
+    margin-top: 1.5%;
+    padding: 5px;
+    border-radius: 10px;
+    height: 40px;
+    width: 100%;
+}
+
+textarea {
+    width: 100%;
+    height: 163px;
+    border-radius: 10px;
+    border: solid 1px black;
+    margin-top: 0.5%;
+    resize: none;
+    padding: 10px;
+}
+
+input[type=submit] {
+    margin-top: 1%;
+    height: 40px;
+    width: 22%;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.3s ease 0s;
+}
+
+input[type=submit]:hover {
+    background-color: #dedede;
+    color: black;
+}
+
+.page_bottom {
+    width: 100%;
+    height: 90px;
+    background-color: #1f1f1f;
+    bottom: -50px;
+    position: absolute;
+}
+
+.tl-navigate {
+    display: flex;
+    flex-direction: column;
+    font-size: 28px;
+
+}
+
+.tl_choose {
+    text-align: center;
+    margin-bottom: 3%;
+    font-weight: 500;
+    color: #1f1f1f;
+}
+
+.tl_types {
+    display: flex;
+    justify-content: space-around;
+    margin: 1%;
+    padding: 1% 0;
+
+}
+
+.tl_type {
+    color: #636363;
+    transition: all 0.3s ease 0s;
+    width: 50%;
+    text-align: center;
+    margin: 0 0;
+}
+
+.tl_type a {
+    cursor: pointer;
+}
+
+.tl_type:first-of-type {
+    border-right: solid 1px #636363;
+}
+
+.timeline-area {
+
+}
+
+.timeline-content {
+    margin: 3% 10%;
+    border-left: solid 3px #ccc;
+    padding: 0 5%;
+
+} /* ----------------- */
+
+.tl-card {
+    background-color: #f0f0ed;
+    border: solid 1px grey;
+    margin: 5% 0;
+    padding: 2%;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tl-card img {
+    object-fit: cover;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tl-card:before {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #f7f7f2;
+    border: 3px solid grey;
+    top: 0;
+    left: -10.51%;
+    position: relative;
+}
+
+.tl-card:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent #ccc transparent transparent;
+    border-width: 10px;
+    position: relative;
+    top: -765px;
+    left: -4.4%;
+}
+
+.tl-card h2, h3, div{
+    background: none;
+    margin: 1% 0;
+}
+
+.tl-card span, a{
+    background: none;
+    text-align: right;
+    text-decoration: none;
+}
+
+.tl-card a {
+    padding: 0.5%;
+    border: 1px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #1f1f1f;
+    color: #dedede;
+    transition: all 0.3s ease 0s;
+}
+
+.tl-card a:hover {
+    background: white;
+    color: #1f1f1f;
+}
+
+.timeline_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timeline_name {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.timeline_date {
+    font-size: 20px;
+}
+
+.timeline_desc {
+    text-align: center;
+}
+
+.timeline_img {
+    padding: 0 5%;
+}
+
+.timeline_img img {
+    object-fit: cover;
+    width: 100%;
+    height: 350px;
+    margin-bottom: 20px;
+}
+
+.event_info {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile_info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 100px;
+}
+
+.user_desc, .user_tls_info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user_desc .username {
+    font-size: 28px;
+}
+
+.user_tls_amount {
+    margin-bottom: 15%;
+}
+
+.user_date {
+    color: gray;
+}
+
+.which_tls {
+    text-align: center;
+    font-size: 32px;
+}
+
+.tl_card h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tl-card h2 img {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.delete {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.create_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.create_logo {
+    font-size: 32px;
+}
+
+.create_form form {
+    width: 75%;
+}
+
+.create_inputs input{
+    margin: 1% 0;
+    border-radius: 10px;
+    height: 30px;
+}
+
+.create_inputs input[type=text], .create_inputs.dates.date input[type=number] {
+    padding: 1%;
+}
+
+.create_inputs.dates {
+    display: flex;
+    position: relative;
+}
+
+.create_inputs.date:first-child {
+    margin-right: 10%;
+}
+
+.create-selector {
+    margin: 6% 0;
+    border-radius: 10px;
+    height: 30px;
+}
+
+.tl-card.chk {
+    margin-right: 20px;
+}
+
+.to-merge {
+    display: flex;
+}
+
+.merge-logo {
+    font-size: 32px;
+    text-align: center;
+}
+
+.choose-to-merge {
+    text-align: center;
+}
+
+.tl-card.chk:before {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #f7f7f2;
+    border: 3px solid grey;
+    top: 0;
+    left: -11.0%;
+    position: relative;
+}
+
+.tl-card.chk:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent #ccc transparent transparent;
+    border-width: 10px;
+    position: relative;
+    top: -725px;
+    left: -4.4%;
+}
+
+.merge-form {
+
+}
+
+.merge-zone-tl {
+    display: flex;
+    flex-direction: row;
+}
+
+.merge-accept {
+    position: fixed;
+    bottom: 75px;
+    right: 150px;
+}
+
+.radio {
+    margin-right: 30px;
+}
+
+
+.tl_desc, .tl_desc p {
+    background-color: #f0f0ed;
+}

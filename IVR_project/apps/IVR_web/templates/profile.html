@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="profile_info">
+        <div class="user_desc">
+            <div class="username">{{ user.username }}</div>
+            <div class="user_email">{{ user.email }}</div>
+            <div class="user_date">Использует histline с: {{ user.date_joined }}</div>
+        </div>
+        <div class="user_tls_info">
+            <div class="user_tls_amount">Всего тайм-лайнов: {{ timelines_total }}</div>
+            <div class="button_lrl"><a href="{% url 'create_tl' %}"><button>Создать тайм-лайн</button></a></div>
+            <div class="button_lrl"><a href="{% url 'merge' %}"><button>Слить тайм-лайны</button></a></div>
+        </div>
+    </div>
+    <div class="which_tls">ТАЙМ-ЛАЙНЫ {{ user.username }}</div>
+    <div class="timeline-area">
+        <div class="timeline-content">
+            {% for tl in timelines %}
+            <div class="tl-card">
+                <img src="{{ tl.photo.url }}">
+                <h2>{{ tl.name }} <img src="/static/IVR_static/img/redact2.jpg"></h2>
+                <h3>{{ tl.date_start }} - {{ tl.date_end }}</h3>
+                <div class="tl_desc">{{ tl.content|linebreaks|truncatewords:80 }}</div>
+                <span><a href="{{ tl.get_absolute_url }}">Читать далее  →</a></span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p class="merge-logo">СЛИЯНИЕ ТАЙМ-ЛАЙНОВ BEPEBDEPD</p>
+    <form action="#" method="post" class="merge-form">
+        <div>
+            <div class="create_inputs">
+                <p>Название <span class="redcol">*</span></p>
+                <input type="text">
+            </div>
+            <div class="create_inputs">
+                <p>Фотография <span class="redcol">*</span></p>
+                <input type="file">
+            </div>
+            <div class="create_inputs">
+                <p>Описание <span class="redcol">*</span></p>
+                <textarea></textarea>
+            </div>
+        </div>
+        <div class="merge-zone-tl">
+            <div class="timeline-area">
+                <p class="choose-to-merge">ВЫБЕРИТЕ ТАЙМ-ЛАЙНЫ ДЛЯ СЛИЯНИЯ</p>
+                <div class="timeline-content merge">
+                    <label class="to-merge">
+                        <div class="tl-card chk">
+                        <img src="/static/IVR_static/img/bitva_2.jpg">
+                        <h2>Столетняя война <img src="/static/IVR_static/img/redact2.jpg"></h2>
+                        <h3>1337 - 1453</h3>
+                        <div>{% lorem 50 w %}</div>
+                        <span><a href="{% url 'open_timeline' %}">Читать далее  →</a></span>
+                    </div>
+                        <input type="checkbox" class="chc" name="#">
+                    </label>
+                    <label class="to-merge">
+                        <div class="tl-card chk">
+                            <img src="/static/IVR_static/img/sev_war.jpeg">
+                            <h2>Северная война <img src="/static/IVR_static/img/redact2.jpg"></h2>
+                            <h3>1700 - 1721</h3>
+                            <div>{% lorem 50 w %}</div>
+                            <span><a href="{% url 'open_timeline' %}">Читать далее  →</a></span>
+                        </div>
+                        <input type="checkbox" class="chc" name="#">
+                    </label>
+                </div>
+            </div>
+            <div class="merge-accept">
+                <div class="button_lrl">
+                    <button>СЛИТЬ</button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
