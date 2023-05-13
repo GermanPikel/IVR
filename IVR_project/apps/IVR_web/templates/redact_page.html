@@ -42,6 +42,7 @@
                     <div class="date">
                         <p>Год начала <span class="redcol">*</span></p>
                         <input type="number" value="{{ year_start }}" name="year_start">
+                        <p style="font-size: 12px; opacity: 0;">--------------------------------------------------------------------------------------</p>
                     </div>
                 </div>
                 <div class="create_inputs date">
@@ -64,8 +65,13 @@
                         </select></p>
                     </div>
                     <div class="date">
-                        <p>Год начала</p>
+                        <p>Год окончания</p>
                         <input type="number" value="{{ year_end }}" name="year_end">
+                        {% if redact_tl %}
+                            <p style="font-size: 12px;">Оставьте это поле пустым, если тайм-лайн длится и по сей день</p>
+                        {% else %}
+                            <p style="font-size: 12px;">Оставьте это поле пустым, если событие длилось один день</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
