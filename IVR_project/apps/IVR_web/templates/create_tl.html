@@ -40,6 +40,7 @@
                         <label for="{{ form.year_start.id_for_label }}">{{ form.year_start.label }} <span
                                 class="redcol">*</span></label>
                         <p class="create-selector">{{ form.year_start }}</p>
+                        <p style="font-size: 12px; opacity: 0;">--------------------------------------------------------------------------------------</p>
                     </div>
                 </div>
                 <div class="create_inputs date">
@@ -56,6 +57,11 @@
                     <div class="date">
                         <label for="{{ form.year_end.id_for_label }}">{{ form.year_end.label }} </label>
                         <p class="create-selector">{{ form.year_end }}</p>
+                        {% if adding_ev %}
+                            <p style="font-size: 12px;">Оставьте это поле пустым, если событие длилось один день</p>
+                        {% else %}
+                            <p style="font-size: 12px;">Оставьте это поле пустым, если тайм-лайн длится и по сей день</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -644,3 +644,7 @@ input[type=submit].search-button {
     width: 100px;
     border-radius: 15px;
 }
+
+.tl-card.chk::after {
+    display: none;
+}

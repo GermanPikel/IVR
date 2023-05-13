@@ -136,7 +136,7 @@ def open_tl(request, timeline_id):
 
 def open_event(request, event_id):
     event = Event.objects.get(pk=event_id)
-    tl_pk = event.timeline
+    tl_pk = event.timeline.pk
     tl = Timeline.objects.get(pk=tl_pk)
     if tl.is_private:
         if request.user != event.user:
@@ -467,7 +467,7 @@ def edit(request):
         tl = Timeline.objects.get(user=request.user, pk=pk_to)
         if request.method == "POST":
             if len(request.FILES) != 0:
-                tl.photo = request.FILES['photo']
+                tl.photo = request.FILES.get('photo')
             tl.name = request.POST.get('name')
             tl.day_start = day_to_num(request.POST.get('day_start'))
             tl.month_start = month_to_num(request.POST.get('month_start'))
@@ -483,7 +483,7 @@ def edit(request):
             pk_ev = int(request.POST.get('_pk'))
             ev = Event.objects.get(pk=pk_ev)
             if len(request.FILES) != 0:
-                ev.photo = request.FILES['photo']
+                ev.photo = request.FILES.get('photo')
             ev.name = request.POST.get('name')
             ev.day_start = day_to_num(request.POST.get('day_start'))
             ev.month_start = month_to_num(request.POST.get('month_start'))
@@ -518,7 +518,7 @@ def merging(request):
     context['content'] = content
     context['timelines'] = Timeline.objects.filter(user=request.user)
     tls_to_merge = request.POST.getlist('to_merge')
-    if name == '' or content == '':
+    if name == '' or content == '' or len(request.FILES) == 0:
         context['error'] = 'Заполните все обязательные поля'
         return render(request, 'merge.html', context)
     if len(tls_to_merge) == 0:
@@ -531,7 +531,7 @@ def merging(request):
     tls = sorted(tls)
     first_tl = tls[0]
     last_tl = tls[-1]
-    merged_tl = Timeline.objects.create(name=name, photo=first_tl.photo, day_start=first_tl.day_start,
+    merged_tl = Timeline.objects.create(name=name, photo=request.FILES.get('photo'), day_start=first_tl.day_start,
                                         month_start=first_tl.month_start, year_start=first_tl.year_start,
                                         day_end=last_tl.day_end, month_end=last_tl.month_end,
                                         year_end=last_tl.year_end, content=content, user=request.user, is_private=False)
