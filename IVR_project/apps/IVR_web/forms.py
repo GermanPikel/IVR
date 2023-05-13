@@ -20,3 +20,15 @@ class AddEvent(forms.ModelForm):
         fields = ['name', 'photo', 'day_start', 'month_start', 'year_start', 'day_end',
                   'month_end', 'year_end', 'content']
 
+
+class ContactForm(forms.Form):
+    theme = forms.CharField(
+        min_length=1,
+        widget=forms.TextInput(
+        )
+    )
+    message = forms.CharField(
+        min_length=10,
+        widget=forms.Textarea(
+        )
+    )

@@ -31,6 +31,12 @@ def main_page(request):
     if request.user.is_authenticated:
         context['user_'] = request.user
 
+    if request.POST.get('message'):
+        email = request.POST.get('email')
+        theme = request.POST.get('theme')
+        message = request.POST.get('message')
+        send_feedback(email, theme, message)
+
     return render(request, 'main_page.html', context)
 
 
@@ -51,6 +57,17 @@ def main_page_detailed(request):
     if request.user.is_authenticated:
         context['user_'] = request.user
 
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        message = email + ': ' + request.POST.get('message')
+        theme = request.POST.get('theme')
+        if True:
+            send_mail(theme,
+                      message,
+                      settings.DEFAULT_FROM_EMAIL,
+                      [settings.EMAIL_HOST_USER],
+                      fail_silently=False)
+
     return render(request, 'main_page.html', context)
 
 
@@ -59,10 +76,8 @@ def open_login(request):
 
 
 def login_(request):
-    print('---------------------')
     username = request.POST.get('username')
     password = request.POST.get('password')
-    print('---------------------')
     if User.objects.filter(username=username).exists():
         user = User.objects.get(username=username)
         if user.check_password(raw_password=password):
@@ -131,6 +146,11 @@ def open_tl(request, timeline_id):
         context['master'] = True
     else:
         context['master'] = False
+    if request.POST.get('message'):
+        email = request.POST.get('email')
+        theme = request.POST.get('theme')
+        message = request.POST.get('message')
+        send_feedback(email, theme, message)
     return render(request, 'timeline.html', context)
 
 
@@ -151,6 +171,11 @@ def open_event(request, event_id):
         context['master'] = True
     else:
         context['master'] = False
+    if request.POST.get('message'):
+        email = request.POST.get('email')
+        theme = request.POST.get('theme')
+        message = request.POST.get('message')
+        send_feedback(email, theme, message)
     return render(request, 'event.html', context)
 
 
@@ -174,6 +199,11 @@ def profile(request, username):
     if request.user.is_authenticated:
         context['user_'] = request.user
     context['user_search'] = user_
+    if request.POST.get('message'):
+        email = request.POST.get('email')
+        theme = request.POST.get('theme')
+        message = request.POST.get('message')
+        send_feedback(email, theme, message)
     return render(request, 'profile.html', context)
 
 
@@ -364,6 +394,7 @@ def create_tl(request):
     return render(request, 'create_tl.html', context)
 
 
+@login_required(login_url=reverse_lazy('login'))
 def copy(request):
     copied_pk = request.POST.get('hide')
     copied_tl = Timeline.objects.get(pk=copied_pk)
@@ -457,10 +488,23 @@ def redact(request):
         context['user_'] = request.user
         return render(request, 'create_tl.html', context)
 
+    if request.POST.get('message'):
+        email = request.POST.get('email')
+        theme = request.POST.get('theme')
+        message = request.POST.get('message')
+        send_feedback(email, theme, message)
+
     return render(request, 'redact_page.html', context)
 
 
 def edit(request):
+
+    if request.POST.get('message'):
+        email = request.POST.get('email')
+        theme = request.POST.get('theme')
+        message = request.POST.get('message')
+        send_feedback(email, theme, message)
+
     pk_to = request.POST.get('_pk')
     t_e = request.POST.get('t_e')
     if t_e == 't':

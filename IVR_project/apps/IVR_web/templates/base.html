@@ -50,32 +50,37 @@
     </div>
     <footer>
         <div class="container">
+        {% if user_ %}
             <div class="contact_form">
                 <div class="feedback_main_text">Обратная связь</div>
                 <div class="feedback_text">Здесь вы можете указать на ошибки, предложить свой вариант
                 их исправления или просто поблагодарить автора сайта.</div>
                 <form action="#" method="post">
+                {% csrf_token %}
                     <div class="form_inputs">
                         <div class="input_block">
                             <p>Ваш email <span class="redcol">*</span></p>
                             {% if user_ %}
-                                <input type="text" value="{{ user_.email }}">
+                                <input type="text" readonly="readonly" value="{{ user_.email }}" name="email">
                             {% else %}
                                 <input type="text">
                             {% endif %}
                         </div>
                         <div class="input_block">
                             <p>Тема <span class="redcol">*</span></p>
-                            <input type="text">
+                            <input type="text" name="theme">
                          </div>
                     </div>
-                    <p>Описание <span class="redcol">*</span></p>
-                    <textarea name="text"></textarea>
+                    <p>Сообщение <span class="redcol">*</span></p>
+                    <textarea name="message"></textarea>
                     <div class="submit_feedback">
                         <input type="submit" value="Отправить">
                     </div>
                 </form>
             </div>
+        {% else %}
+            <p style="padding-bottom: 70px; text-align: center; font-size: 28px">Войдите в систему, чтобы отправить форму обратной связи</p>
+        {% endif %}
         </div>
         <div class="page_bottom">
 
