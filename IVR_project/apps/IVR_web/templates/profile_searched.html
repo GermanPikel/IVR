@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <input type="hidden" name="username_profile" value="{{ user_search.username }}">
     <div class="profile_info">
         <div class="user_desc">
             <div class="username">{{ user_search.username }}</div>
@@ -10,10 +9,8 @@
         </div>
         <div class="user_tls_info">
             <div class="user_tls_amount">Всего тайм-лайнов: {{ timelines_total }}</div>
-            {% if redact_rules %}
-                <div class="button_lrl"><a href="{% url 'create_tl' %}"><button>Создать тайм-лайн</button></a></div>
-                <div class="button_lrl"><a href="{% url 'merge' %}"><button>Слить тайм-лайны</button></a></div>
-            {% endif %}
+            <div class="button_lrl"><a href="{% url 'create_tl' %}"><button>Создать тайм-лайн</button></a></div>
+            <div class="button_lrl"><a href="{% url 'merge' %}"><button>Слить тайм-лайны</button></a></div>
         </div>
     </div>
     <div class="which_tls">ТАЙМ-ЛАЙНЫ {{ user_search.username }}</div>
@@ -22,13 +19,11 @@
             {% for tl in timelines %}
             <div class="tl-card">
                 <img src="{{ tl.photo.url }}">
-                <h2>{{ tl.name }}</h2>
+                <h2>{{ tl.name }} <img src="/static/IVR_static/img/redact2.jpg"></h2>
                 <h3>{{ tl.date_start }} - {{ tl.date_end }}</h3>
                 <div class="tl_desc">{{ tl.content|linebreaks|truncatewords:80 }}</div>
-                <span><a class="read_more" href="{{ tl.get_absolute_url }}">Читать далее  →</a></span>
+                <span><a href="{{ tl.get_absolute_url }}">Читать далее  →</a></span>
             </div>
-            {% empty %}
-            <div><p class="announce">Пользователь не добавил ни одного тайм-лайна.</p></div>
             {% endfor %}
         </div>
     </div>

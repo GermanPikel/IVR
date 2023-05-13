@@ -9,7 +9,8 @@
 </head>
 <body>
     <div class="center">
-        <h1>Регистрация</h1> {{ error }}
+        <h1>Регистрация</h1>
+        <p class="error">{{ error }}</p>
         <form action="{% url 'confirm_reg' %}" method="post">
             {% csrf_token %}
             <div class="txt_field">

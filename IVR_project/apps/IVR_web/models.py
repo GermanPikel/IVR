@@ -76,17 +76,32 @@ class Timeline(models.Model):
             return 1
         return 0
 
-    def get_month_days(self):
-        if self.month_start in [1, 3, 5, 7, 8, 10, 12]:
-            return 31
-        elif self.month_start in [4, 6, 9, 11]:
-            return 30
-        return self.is_vis() + 28
+    def get_month_days(self, pos):
+        if pos == 'start':
+            if self.month_start in [1, 3, 5, 7, 8, 10, 12]:
+                return 31 * self.month_start
+            elif self.month_start in [4, 6, 9, 11]:
+                return 30 * self.month_start
+            return (self.is_vis() + 28) * self.month_start
+        else:
+            if self.month_end in [1, 3, 5, 7, 8, 10, 12]:
+                return 31 * self.month_end
+            elif self.month_end in [4, 6, 9, 11]:
+                return 30 * self.month_end
+            return (self.is_vis() + 28) * self.month_end
 
     def __lt__(self, other):
-        return (int(self.year_start) * (365 + self.is_vis()) + int(self.get_month_days()) + int(
-            self.day_start)) < (int(other.year_start) * (365 + self.is_vis()) + int(other.get_month_days()) * 30 + int(
+        return (int(self.year_start) * (365 + self.is_vis()) + int(self.get_month_days('start')) + int(
+            self.day_start)) < (int(other.year_start) * (365 + self.is_vis()) + int(other.get_month_days('start')) + int(
             other.day_start))
+
+    def get_num_start(self):
+        return (int(self.year_start) * (365) + int(self.get_month_days('start')) + int(
+            self.day_start))
+
+    def get_num_end(self):
+        return (int(self.year_end) * (365) + int(self.get_month_days('end')) + int(
+            self.day_end))
 
     def __get_month_start(self):
         if self.month_start == 0:
@@ -214,7 +229,9 @@ class Timeline(models.Model):
         return self.__get_date('start') + ' ' + str(self.year_start)
 
     def date_end(self):
-        return self.__get_date('end') + ' ' +str(self.year_end)
+        if self.year_end == 72766797:
+            return 'Наше время'
+        return self.__get_date('end') + ' ' + str(self.year_end)
 
     def __str__(self):
         return self.name
@@ -296,17 +313,24 @@ class Event(models.Model):
             return 1
         return 0
 
-    def get_month_days(self):
-        if self.month_start in [1, 3, 5, 7, 8, 10, 12]:
-            return 31
-        elif self.month_start in [4, 6, 9, 11]:
-            return 30
-        return self.is_vis() + 28
+    def get_month_days(self, pos):
+        if pos == 'start':
+            if self.month_start in [1, 3, 5, 7, 8, 10, 12]:
+                return 31 * self.month_start
+            elif self.month_start in [4, 6, 9, 11]:
+                return 30 * self.month_start
+            return (self.is_vis() + 28) * self.month_start
+        else:
+            if self.month_end in [1, 3, 5, 7, 8, 10, 12]:
+                return 31 * self.month_start
+            elif self.month_end in [4, 6, 9, 11]:
+                return 30 * self.month_start
+            return (self.is_vis() + 28) * self.month_start
 
     def __lt__(self, other):
-        return (int(self.year_start) * (365 + self.is_vis()) + int(self.get_month_days()) + int(
+        return (int(self.year_start) * (365) + int(self.get_month_days('start')) + int(
             self.day_start)) < (
-                       int(other.year_start) * (365 + self.is_vis()) + int(other.get_month_days()) * 30 + int(
+                       int(other.year_start) * (365) + int(other.get_month_days('start')) + int(
                    other.day_start))
 
     def __get_month_start(self):
@@ -435,10 +459,20 @@ class Event(models.Model):
         return self.__get_date('start') + ' ' + str(self.year_start)
 
     def date_end(self):
+        if self.year_end == 72766797:
+            return None
         return self.__get_date('end') + ' ' +str(self.year_end)
 
     def __str__(self):
         return self.name
+
+    def get_num_start(self):
+        return (int(self.year_start) * (365) + int(self.get_month_days('start')) + int(
+            self.day_start))
+
+    def get_num_end(self):
+        return (int(self.year_end) * (365) + int(self.get_month_days('end')) + int(
+            self.day_end))
 
     def get_absolute_url(self):
         return reverse('event', kwargs={'event_id': self.pk})

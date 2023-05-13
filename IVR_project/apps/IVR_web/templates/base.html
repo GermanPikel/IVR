@@ -12,20 +12,27 @@
     <header class="header-bar">
         <div class="logo_text"><a href="{% url 'home' %}">histline.</a></div>
         <nav>
-            <ul class="main_nav">
-                <li><input class="search" placeholder="Поиск"></li> <!--<button>🔍</button>-->
-                <li><select class="search_selector">
-                        <option>Год</option>
-                        <option>Событие</option>
-                        <option>Пользователь</option>
-                        <option>Правитель/Исторический деятель</option>
-                    </select>
-                </li>
-            </ul>
+            <form action="{% url 'search' %}" method="post">
+                {% csrf_token %}
+                <ul class="main_nav">
+                    <li><input class="search" placeholder="Поиск" name="text"></li> <!--<button>🔍</button>-->
+                    <li>
+                        <select class="search_selector" name="parameter">
+                            <option>Год</option>
+                            <option>Событие</option>
+                            <option>Пользователь</option>
+                            <option>Правитель/Исторический деятель</option>
+                        </select>
+                    </li>
+                    <li>
+                        <input type="submit" class="search-button" value="Найти">
+                    </li>
+                </ul>
+                </form>
         </nav>
         <div class="user_interaction">
             {% if user_ %}
-                <a class="button_lrl" href="{% url 'profile' %}"><button>{{ user.username }}</button></a>
+                <a class="button_lrl" href="{{ user_.get_absolute_url }}"><button>{{ user_.username }}</button></a>
                 <a class="button_lrl" href="{% url 'logout' %}"><button>Выйти</button></a>
             {% else %}
                 <a class="button_lrl" href="{% url 'registration' %}"><button>Зарегистрироваться</button></a>
@@ -51,7 +58,11 @@
                     <div class="form_inputs">
                         <div class="input_block">
                             <p>Ваш email <span class="redcol">*</span></p>
-                            <input type="text">
+                            {% if user_ %}
+                                <input type="text" value="{{ user_.email }}">
+                            {% else %}
+                                <input type="text">
+                            {% endif %}
                         </div>
                         <div class="input_block">
                             <p>Тема <span class="redcol">*</span></p>
@@ -71,6 +82,6 @@
         </div>
     </footer>
 </body>
-<script rel="script" src="{% static 'js/jquery.min.js' %}"></script>
-<script rel="script" src="{% static 'js/main.js' %}"></script>
+<script rel="script" src="{% static 'IVR_static/js/jquery.min.js' %}"></script>
+<script rel="script" src="{% static 'IVR_static/js/main.js' %}"></script>
 </html>

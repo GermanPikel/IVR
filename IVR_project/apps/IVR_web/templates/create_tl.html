@@ -2,76 +2,88 @@
 
 {% block content %}
     <div class="create_form">
-        <p class="create_logo">СОЗДАТЬ СОБСТВЕННЫЙ ТАЙМ-ЛАЙН</p>
-        <form action="#" method="post">
+        {% if adding_ev %}
+            <p class="create_logo">ДОБАВИТЬ СОБЫТИЕ В {{ tl_name|upper }}</p>
+            <p class="created_date">{{ tl_start }} - {{ tl_end }}</p>
+        {% else %}
+            <p class="create_logo">СОЗДАТЬ СОБСТВЕННЫЙ ТАЙМ-ЛАЙН</p>
+        {% endif %}
+        <form action="{% url 'create_tl' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="hide" {% if hidee %} value="{{ hidee }}" {% else %} value="t" {% endif %}>
+            <input type="hidden" name="tl_pk" {% if hidee %} value="{{ tl_pk }}" {% else %} value="t" {% endif %}>
             <div class="create_inputs">
-                <p>Название <span class="redcol">*</span></p>
-                <input type="text">
+                <label for="{{ form.name.id_for_label }}">{{ form.name.label }} <span class="redcol">*</span></label>
+                <p>{{ form.name }}</p>
+                <div>{{ form.name.errors }}</div>
             </div>
             <div class="create_inputs">
-                <p>Фотография <span class="redcol">*</span></p>
-                <input type="file">
+                <label for="{{ form.photo.id_for_label }}">{{ form.photo.label }} <span class="redcol">*</span></label>
+                <p>{{ form.photo }}</p>
             </div>
+            {% if date_error %}
+                <p class="create_error">{{ date_error }}</p>
+            {% endif %}
             <div class="create_inputs dates">
                 <div class="create_inputs date">
-                <div class="date">
-                    <p>День начала:</p>
-                    <select class="create-selector">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                    </select>
+                    <div class="date">
+                        <label for="{{ form.day_start.id_for_label }}">{{ form.day_start.label }} <span
+                                class="redcol">*</span></label>
+                        <p class="create-selector">{{ form.day_start }}</p>
+                    </div>
+                    <div class="date">
+                        <label for="{{ form.month_start.id_for_label }}">{{ form.month_start.label }} <span
+                                class="redcol">*</span></label>
+                        <p class="create-selector">{{ form.month_start }}</p>
+                    </div>
+                    <div class="date">
+                        <label for="{{ form.year_start.id_for_label }}">{{ form.year_start.label }} <span
+                                class="redcol">*</span></label>
+                        <p class="create-selector">{{ form.year_start }}</p>
+                    </div>
                 </div>
-                <div class="date">
-                    <p>Месяц начала:</p>
-                    <select class="create-selector">
-                        <option>Январь</option>
-                        <option>Февраль</option>
-                        <option>Март</option>
-                    </select>
-                </div>
-                <div class="date">
-                    <p>Год начала <span class="redcol">*</span></p>
-                    <input type="number">
-                </div>
-            </div>
                 <div class="create_inputs date">
-                <div class="date">
-                    <p>День окончания:</p>
-                    <select class="create-selector">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                    </select>
+                    <div class="date">
+                        <label for="{{ form.day_end.id_for_label }}">{{ form.day_end.label }} <span
+                                class="redcol">*</span></label>
+                        <p class="create-selector">{{ form.day_end }}</p>
+                    </div>
+                    <div class="date">
+                        <label for="{{ form.month_end.id_for_label }}">{{ form.month_end.label }} <span
+                                class="redcol">*</span></label>
+                        <p class="create-selector">{{ form.month_end }}</p>
+                    </div>
+                    <div class="date">
+                        <label for="{{ form.year_end.id_for_label }}">{{ form.year_end.label }} </label>
+                        <p class="create-selector">{{ form.year_end }}</p>
+                    </div>
                 </div>
-                <div class="date">
-                    <p>Месяц окончания:</p>
-                    <select class="create-selector">
-                        <option>Январь</option>
-                        <option>Февраль</option>
-                        <option>Март</option>
-                    </select>
-                </div>
-                <div class="date">
-                    <p>Год окончания</p>
-                    <input type="number">
-                </div>
-            </div>
             </div>
             <div class="create_inputs">
-                <p>Описание <span class="redcol">*</span></p>
-                <textarea></textarea>
+                <label for="{{ form.content.id_for_label }}">{{ form.content.label }} <span
+                        class="redcol">*</span></label>
+                {{ form.content }}
             </div>
-            <div class="create_inputs">
-                <label >
-                    <input type="checkbox" name="privacy" value="public" checked>
-                    Приватный
-                </label>
-            </div>
-            <div class="submit_feedback">
-                <input type="submit" value="Далее">
-            </div>
-            <a href="{% url 'create_event' %}">тестовая кнопка далее</a>
+            {% if hidee %}
+            {% else %}
+                <div class="create_inputs">
+                    <label for="{{ form.is_private.id_for_label }}">
+                        {{ form.is_private.label }} <span class="isp">{{ form.is_private }}</span>
+                    </label>
+                </div>
+            {% endif %}
+            {% if adding_ev %}
+                <div class="submit_feedback">
+                    <input type="submit" name="sbmt" value="Сохранить и добавить ещё">
+                </div>
+                <div class="submit_feedback">
+                    <input type="submit" name="sbmt" value="Сохранить и выйти">
+                </div>
+            {% else %}
+                <div class="submit_feedback">
+                    <input type="submit" value="Далее">
+                </div>
+            {% endif %}
         </form>
     </div>
 {% endblock %}

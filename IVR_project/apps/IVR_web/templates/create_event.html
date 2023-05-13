@@ -2,71 +2,76 @@
 
 {% block content %}
     <div class="create_form">
-        <p class="create_logo">ДОБАВИТЬ СОБЫТИЕ</p>
+        <p>{{ ev_go }}</p>
+        <p class="create_logo">ДОБАВИТЬ СОБЫТИЕ В {{ tl_name|upper }}</p>
         <form action="#" method="post">
+            {% csrf_token %}
+            {% if error %}
+                <div class="create_error">{{ error }}</div>
+            {% endif %}
             <div class="create_inputs">
                 <p>Название <span class="redcol">*</span></p>
-                <input type="text">
+                <input type="text" name="title" {% if name %} value="{{ name }}" {% endif %}>
             </div>
             <div class="create_inputs">
                 <p>Фотография <span class="redcol">*</span></p>
-                <input type="file">
+                <input type="file" name="photo">
             </div>
             <div class="create_inputs dates">
                 <div class="create_inputs date">
                 <div class="date">
                     <p>День начала:</p>
-                    <select class="create-selector">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
+                    <select class="create-selector" name="day_start">
+                        {% for day in days %}
+                            <option>{{ day }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="date">
                     <p>Месяц начала:</p>
-                    <select class="create-selector">
-                        <option>Январь</option>
-                        <option>Февраль</option>
-                        <option>Март</option>
+                    <select class="create-selector" name="month_start">
+                        {% for month in months %}
+                            <option>{{ month }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="date">
                     <p>Год начала <span class="redcol">*</span></p>
-                    <input type="number">
+                    <input type="number" name="year_start" {% if syear %} value="{{ syear }}" {% endif %}>
                 </div>
             </div>
                 <div class="create_inputs date">
                 <div class="date">
                     <p>День окончания:</p>
-                    <select class="create-selector">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
+                    <select class="create-selector" name="day_end">
+                        {% for day in days %}
+                            <option>{{ day }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="date">
                     <p>Месяц окончания:</p>
-                    <select class="create-selector">
-                        <option>Январь</option>
-                        <option>Февраль</option>
-                        <option>Март</option>
+                    <select class="create-selector" name="month_end">
+                        {% for month in months %}
+                            <option>{{ month }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="date">
                     <p>Год окончания</p>
-                    <input type="number">
+                    <input type="number" name="year_end" {% if eyear %} value="{{ eyear }}" {% endif %}>
                 </div>
             </div>
             </div>
             <div class="create_inputs">
                 <p>Описание <span class="redcol">*</span></p>
-                <textarea></textarea>
+                <textarea name="description">{% if content %}{{ content }}{% endif %}</textarea>
             </div>
             <div class="submit_feedback">
-                <input type="submit" value="Сохранить и добавить ещё">
+                <input type="submit" name="smbt" value="Сохранить и добавить ещё">
             </div>
             <div class="submit_feedback">
-                <input type="submit" value="Сохранить и выйти">
+                <input type="submit" name="smbt" value="Сохранить и выйти">
             </div>
         </form>
     </div>

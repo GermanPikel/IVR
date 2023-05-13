@@ -1,51 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p class="merge-logo">СЛИЯНИЕ ТАЙМ-ЛАЙНОВ BEPEBDEPD</p>
-    <form action="#" method="post" class="merge-form">
+    <p class="merge-logo">СЛИЯНИЕ ТАЙМ-ЛАЙНОВ {{ user_.username }}</p>
+    <form action="{% url 'merging' %}" method="post" class="merge-form" enctype="multipart/form-data">
+    {% csrf_token %}
         <div>
+            {% if error %} <div class="create_error">{{ error }}</div> {% endif %}
             <div class="create_inputs">
                 <p>Название <span class="redcol">*</span></p>
-                <input type="text">
-            </div>
-            <div class="create_inputs">
-                <p>Фотография <span class="redcol">*</span></p>
-                <input type="file">
+                <input type="text" name="name">
             </div>
             <div class="create_inputs">
                 <p>Описание <span class="redcol">*</span></p>
-                <textarea></textarea>
+                <textarea name="content"></textarea>
             </div>
         </div>
         <div class="merge-zone-tl">
             <div class="timeline-area">
                 <p class="choose-to-merge">ВЫБЕРИТЕ ТАЙМ-ЛАЙНЫ ДЛЯ СЛИЯНИЯ</p>
                 <div class="timeline-content merge">
+                    {% for tl in timelines %}
                     <label class="to-merge">
                         <div class="tl-card chk">
-                        <img src="/static/IVR_static/img/bitva_2.jpg">
-                        <h2>Столетняя война <img src="/static/IVR_static/img/redact2.jpg"></h2>
-                        <h3>1337 - 1453</h3>
-                        <div>{% lorem 50 w %}</div>
-                        <span><a href="{% url 'open_timeline' %}">Читать далее  →</a></span>
-                    </div>
-                        <input type="checkbox" class="chc" name="#">
-                    </label>
-                    <label class="to-merge">
-                        <div class="tl-card chk">
-                            <img src="/static/IVR_static/img/sev_war.jpeg">
-                            <h2>Северная война <img src="/static/IVR_static/img/redact2.jpg"></h2>
-                            <h3>1700 - 1721</h3>
-                            <div>{% lorem 50 w %}</div>
-                            <span><a href="{% url 'open_timeline' %}">Читать далее  →</a></span>
+                        <img src="{{ tl.photo.url }}">
+                        <h2>{{ tl.name }}</h2>
+                        <h3>{{ tl.date_start }} - {{ tl.date_end }}</h3>
+                        <div>{{ tl.content|truncatewords:80 }}</div>
                         </div>
-                        <input type="checkbox" class="chc" name="#">
+                        <input type="checkbox" class="chc" value="{{ tl.pk }}" id="{{ tl.pk }}" name="to_merge">
                     </label>
+                    {% endfor %}
                 </div>
             </div>
             <div class="merge-accept">
                 <div class="button_lrl">
-                    <button>СЛИТЬ</button>
+                    <input type="submit" name="sbmt" value="Слить">
                 </div>
             </div>
         </div>

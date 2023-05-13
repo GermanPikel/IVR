@@ -1,3 +1,10 @@
+var btn = document.getElementById("plus");
+btn.addEventListener("click", function() {
+  this.classList.add("plus_act");
+  this.hidden;
+});
+
+
 const popupLinks = document.querySelectorAll(".popup-link");
 const body = document.querySelector('body');
 const lockPadding = document.querySelectorAll(".lock-padding");

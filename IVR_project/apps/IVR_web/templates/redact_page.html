@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="create_form">
+        <p class="create_logo">РЕДАКТИРОВАТЬ {{ name|upper }}</p>
+        <form action="{% url 'edit' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="t_e" {% if redact_tl %} value="t" {% else %} value="e" {% endif %} >
+            <input type="hidden" name="_pk" {% if redact_tl %} value="{{ tl_pk }}" {% else %} value="{{ ev_pk }}" {% endif %}>
+            <div class="create_inputs">
+                <p>Название <span class="redcol">*</span></p>
+                <input type="text" name="name" value="{{ name }}">
+            </div>
+            <div class="create_inputs ph">
+                <p>Фотография <span class="redcol">*</span></p>
+                <div><img src="{{ photo_url }}"></div>
+                <input type="file" name="photo">
+            </div>
+            {% if date_error %}
+                <p class="create_error">{{ date_error }}</p>
+            {% endif %}
+            <div class="create_inputs dates">
+                <div class="create_inputs date">
+                    <div class="date">
+                    <p>День начала <span class="redcol">*</span></p>
+                    <p class="create-selector"><select class="create-selector" name="day_start">
+                        <option>{{ day_start }}</option>
+                        {% for day in days %}
+                            <option>{{ day }}</option>
+                        {% endfor %}
+                    </select></p>
+                    </div>
+                    <div class="date">
+                        <p class="create-selector">Месяц начала <span class="redcol">*</span></p>
+                        <p class="create-selector"><select name="month_start">
+                            <option>{{ month_start }}</option>
+                            {% for month in months %}
+                                <option>{{ month }}</option>
+                            {% endfor %}
+                        </select></p>
+                    </div>
+                    <div class="date">
+                        <p>Год начала <span class="redcol">*</span></p>
+                        <input type="number" value="{{ year_start }}" name="year_start">
+                    </div>
+                </div>
+                <div class="create_inputs date">
+                    <div class="date">
+                        <p>День окончания <span class="redcol">*</span></p>
+                        <p class="create-selector"><select name="day_end">
+                        <option>{{ day_end }}</option>
+                        {% for day in days %}
+                            <option>{{ day }}</option>
+                        {% endfor %}
+                    </select></p>
+                    </div>
+                    <div class="date">
+                        <p class="create-selector">Месяц окончания <span class="redcol">*</span></p>
+                        <p class="create-selector"><select name="month_end">
+                            <option>{{ month_end }}</option>
+                            {% for month in months %}
+                                <option>{{ month }}</option>
+                            {% endfor %}
+                        </select></p>
+                    </div>
+                    <div class="date">
+                        <p>Год начала</p>
+                        <input type="number" value="{{ year_end }}" name="year_end">
+                    </div>
+                </div>
+            </div>
+            <div class="create_inputs">
+                <p>Описание <span class="redcol">*</span></p>
+                <textarea name="content">{{ content }}</textarea>
+            </div>
+            {% if redact_tl %}
+                <div class="create_inputs">
+                     <label >
+                    <input type="checkbox" name="privacy" value="{{ is_private }}">
+                    Приватный
+                </label>
+                </div>
+            {% endif %}
+            <div class="submit_feedback">
+                <input type="submit" name="sbmt" value="Сохранить">
+            </div>
+        </form>
+    </div>
+{% endblock %}
