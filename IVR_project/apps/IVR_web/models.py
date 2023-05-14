@@ -92,9 +92,8 @@ class Timeline(models.Model):
 
     def __lt__(self, other):
         return (int(self.year_start) * (365 + self.is_vis()) + int(self.get_month_days('start')) + int(
-            self.day_start)) < (
-                           int(other.year_start) * (365 + self.is_vis()) + int(other.get_month_days('start')) + int(
-                       other.day_start))
+            self.day_start)) < (int(other.year_start) * (365 + self.is_vis()) + int(other.get_month_days('start')) + int(
+            other.day_start))
 
     def get_num_start(self):
         return (int(self.year_start) * (365) + int(self.get_month_days('start')) + int(
@@ -439,8 +438,6 @@ class Event(models.Model):
             return 'Декабрь'
 
     def __get_date(self, position):
-        if self.year_end == 72766797:
-            self.year_end = self.year_start
         if position == 'start':
             if self.month_start:
                 if self.day_start:
@@ -459,15 +456,12 @@ class Event(models.Model):
                 return ''
 
     def date_start(self):
-        if self.year_end == 72766797:
-            self.year_end = self.year_start
         return self.__get_date('start') + ' ' + str(self.year_start)
 
     def date_end(self):
         if self.year_end == 72766797:
-            self.year_end = self.year_start
             return None
-        return self.__get_date('end') + ' ' + str(self.year_end)
+        return self.__get_date('end') + ' ' +str(self.year_end)
 
     def __str__(self):
         return self.name
