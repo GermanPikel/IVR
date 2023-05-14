@@ -39,3 +39,13 @@ def send_feedback(email, theme, message):
               settings.DEFAULT_FROM_EMAIL,
               [settings.EMAIL_HOST_USER],
               fail_silently=False)
+
+
+def username_correct(username: str) -> bool:
+    allowed_letters = 'qwertyuiopasdfghjklzxcvbnm'
+    allowed_symbols = '1234567890_'
+    allowed = allowed_symbols + allowed_letters + allowed_letters.upper()
+    for i in username:
+        if i not in allowed:
+            return False
+    return True

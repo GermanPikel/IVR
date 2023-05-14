@@ -106,11 +106,15 @@ def registration(request):
     if password_verify == password and len(password) >= 8:
         if User.objects.filter(username=username).exists():
             context = {
-                'error': 'Пользователь с таким уже существует.'
+                'error': 'Пользователь с таким именем уже существует.'
             }
         elif User.objects.filter(email=email).exists():
             context = {
                 'error': 'Пользователь с таким email уже существует.'
+            }
+        elif not username_correct(username):
+            context = {
+                'error': 'Имя может состоять только из латинских букв, цифр и "_" '
             }
         else:
             user = User.objects.create_user(username=username, email=email
