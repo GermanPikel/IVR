@@ -263,7 +263,7 @@ def search_params(request):
                             events_result.append(event)
             else:
                 if text.isalpha():
-                    events_result = Event.objects.filter(content__icontains=text)
+                    events_result = Event.objects.filter(content__icontains=text, user=User.objects.get(username='admin'))
 
             context['search_result'] = events_result
 
