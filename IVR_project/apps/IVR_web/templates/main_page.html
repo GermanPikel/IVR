@@ -25,7 +25,7 @@
                 <div class="tl-card">
                     <img src="{{ tl.photo.url }}">
                     <h2>{{ tl.name }}</h2>
-                    <h3>{{ tl.date_start }} - {{ tl.date_end }}</h3>
+                    <h3>{{ tl.date_start }} {% if tl.date_end %}- {{ tl.date_end }}{% endif %}</h3>
                     <div class="tl_desc">{{ tl.content|linebreaks|truncatewords:80 }}</div>
                     <span><a class="read_more" href="{{ tl.get_absolute_url }}">Читать далее  →</a></span>
                 </div>

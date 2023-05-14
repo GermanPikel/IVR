@@ -240,7 +240,7 @@ def search_params(request):
             context['events_count'] = events_count
             context['timelines_count'] = timelines_count
     elif parameter == 'Событие':
-        events = sorted(Event.objects.filter(name__icontains=text))
+        events = sorted(Event.objects.filter(name__icontains=text, user=User.objects.get(email='germanpikel@gmail.com')))
         context['search_result'] = events
     else:
         events = sorted(Event.objects.all())
