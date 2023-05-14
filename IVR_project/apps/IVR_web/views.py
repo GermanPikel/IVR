@@ -133,7 +133,7 @@ def open_tl(request, timeline_id):
     tl = Timeline.objects.get(pk=timeline_id)
     if tl.is_private:
         if request.user != tl.user:
-            raise Http404()
+            return redirect('home', permanent=True)
     tl_master = tl.user
     events = sorted(Event.objects.filter(timeline_id=timeline_id))
     context = {
@@ -160,7 +160,7 @@ def open_event(request, event_id):
     tl = Timeline.objects.get(pk=tl_pk)
     if tl.is_private:
         if request.user != event.user:
-            raise Http404()
+            return redirect('home', permanent=True)
     tl_master = event.user
     context = {
         'event': event
