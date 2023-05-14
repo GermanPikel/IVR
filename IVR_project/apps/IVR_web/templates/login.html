@@ -19,7 +19,7 @@
             <div class="txt_field">
                 <input type="password" required placeholder="Пароль" name="password">
             </div>
-            <div class="forget_pass">Забыл пароль?</div>
+            <div class="forget_pass"><a href="{% url 'password_reset' %}">Забыл пароль?</a></div>
             <input type="submit" value="Войти">
             <div class="signup_link">
                 <a href="{% url 'registration' %}">Зарегистрироваться</a>

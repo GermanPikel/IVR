@@ -58,15 +58,17 @@ form .txt_field {
     pointer-events: none;
 }
 
-.forget_pass {
+.forget_pass, .forget_pass a {
     margin: -5px 0 20px 5px;
     color: #a6a6a6;
     cursor: pointer;
     font-weight: 590;
+    text-decoration: none;
 }
 
-.forget_pass:hover {
+.forget_pass:hover, .forget_pass a:hover {
     color: #1f1f1f;
+    text-decoration: none;
 }
 
 input[type=submit] {
