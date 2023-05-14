@@ -4,12 +4,16 @@
     <p class="search_logo">Результаты поиска</p>
     {% if parameter == 'Пользователь' %}
         {% if search_result %}
-        <div class="user_searched">
-            <div class="user_searched_content">
-                <div class="username"><a class="username-link" href="{{ search_result.get_absolute_url }}">{{ search_result.username }} →</a></div>
-                <div class="username-info"> Всего тайм-лайнов: {{ timelines_count }}</div>
+            <div class="user_searched">
+                <div class="user_searched_content">
+                    <div class="username"><a class="username-link"
+                                             href="{{ search_result.get_absolute_url }}">{{ search_result.username }}
+                        →</a></div>
+                    <div class="username-info"> Всего тайм-лайнов: {{ timelines_count }}</div>
+                </div>
             </div>
-        </div>
+        {% else %}
+            <div>По вашему запросу ничего не найдено.</div>
         {% endif %}
     {% else %}
         <div class="timeline-area">
@@ -22,7 +26,7 @@
                         <div class="tl_desc">{{ res.content|linebreaks|truncatewords:80 }}</div>
                         <span><a class="read_more" href="{{ res.get_absolute_url }}">Читать далее  →</a></span>
                     </div>
-                {% empty %}
+                    {% empty %}
                     <div>По вашему запросу ничего не найдено.</div>
                 {% endfor %}
             </div>
