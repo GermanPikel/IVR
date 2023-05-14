@@ -250,7 +250,7 @@ def search_params(request):
             events = sorted(Event.objects.filter(name__icontains=text, user=User.objects.get(username='admin')))
             context['search_result'] = events
         else:
-            events = sorted(Event.objects.filter(name__icontains=text, user=User.objects.get(username='admin')))
+            events = sorted(Event.objects.filter(user=User.objects.get(username='admin')))
             events_result = []
             if parameter == 'Год':
                 if text.isdigit():
@@ -261,7 +261,7 @@ def search_params(request):
                 if text.isalpha():
                     events_result = Event.objects.filter(content__icontains=text)
 
-                context['search_result'] = events_result
+            context['search_result'] = events_result
 
 
     return render(request, 'search_result_page.html', context)
