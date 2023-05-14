@@ -235,31 +235,34 @@ def search_params(request):
     text = request.POST.get('text')
     parameter = request.POST.get('parameter')
     context['parameter'] = parameter
-    if parameter == 'Пользователь':
-        if User.objects.filter(username=text).exists():
-            user_searched = User.objects.get(username=text)
-            user_evs = Event.objects.filter(user=user_searched.id)
-            user_tls = Timeline.objects.filter(user=user_searched.id, is_private=0)
-            events_count = len(user_evs)
-            timelines_count = len(user_tls)
-            context['search_result'] = user_searched
-            context['events_count'] = events_count
-            context['timelines_count'] = timelines_count
-    elif parameter == 'Событие':
-        events = sorted(Event.objects.filter(name__icontains=text, user=User.objects.get(email='germanpikel@gmail.com')))
-        context['search_result'] = events
-    else:
-        events = sorted(Event.objects.all())
-        events_result = []
-        if parameter == 'Год':
-            if text.isdigit():
-                for event in events:
-                    if int(text) >= event.year_start and int(text) <= event.year_end:
-                        events_result.append(event)
+    if text:
+        if parameter == 'Пользователь':
+            if User.objects.filter(username=text).exists():
+                user_searched = User.objects.get(username=text)
+                user_evs = Event.objects.filter(user=user_searched.id)
+                user_tls = Timeline.objects.filter(user=user_searched.id, is_private=0)
+                events_count = len(user_evs)
+                timelines_count = len(user_tls)
+                context['search_result'] = user_searched
+                context['events_count'] = events_count
+                context['timelines_count'] = timelines_count
+        elif parameter == 'Событие':
+            events = sorted(Event.objects.filter(name__icontains=text, user=User.objects.get(name='admin')))
+            context['search_result'] = events
         else:
-            events_result = Event.objects.filter(content__icontains=text)
+            if text.isalpha():
+                events = sorted(Event.objects.filter(name__icontains=text, user=User.objects.get(name='admin')))
+                events_result = []
+                if parameter == 'Год':
+                    if text.isdigit():
+                        for event in events:
+                            if int(text) >= event.year_start and int(text) <= event.year_end:
+                                events_result.append(event)
+                else:
+                    events_result = Event.objects.filter(content__icontains=text)
 
-        context['search_result'] = events_result
+                context['search_result'] = events_result
+
 
     return render(request, 'search_result_page.html', context)
 
