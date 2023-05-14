@@ -133,10 +133,10 @@ def open_tl(request, timeline_id):
     try:
         tl = Timeline.objects.get(pk=timeline_id)
     except:
-        return render(request, 'not_found.html', context={'what': 'тайм-лайна'})
+        return render(request, 'not_found.html', context={'what': 'тайм-лайна', 'user_': request.user})
     if tl.is_private:
         if request.user != tl.user:
-            return render(request, 'not_found.html', context={'what': 'тайм-лайна'})
+            return render(request, 'not_found.html', context={'what': 'тайм-лайна', 'user_': request.user})
     tl_master = tl.user
     events = sorted(Event.objects.filter(timeline_id=timeline_id))
     context = {
@@ -163,10 +163,10 @@ def open_event(request, event_id):
         tl_pk = event.timeline.pk
         tl = Timeline.objects.get(pk=tl_pk)
     except:
-        return render(request, 'not_found.html', context={'what': 'события'})
+        return render(request, 'not_found.html', context={'what': 'события', 'user_': request.user})
     if tl.is_private:
         if request.user != event.user:
-            return render(request, 'not_found.html', context={'what': 'события'})
+            return render(request, 'not_found.html', context={'what': 'события', 'user_': request.user})
     tl_master = event.user
     context = {
         'event': event
