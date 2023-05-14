@@ -255,7 +255,7 @@ def search_params(request):
             if parameter == 'Год':
                 if text.isdigit():
                     for event in events:
-                        if int(text) >= event.year_start and int(text) <= event.year_end:
+                        if int(text) >= event.year_start and int(text) <= event.year_end and event.year_end != 72766797:
                             events_result.append(event)
             else:
                 if text.isalpha():
