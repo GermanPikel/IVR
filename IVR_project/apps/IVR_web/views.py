@@ -247,18 +247,18 @@ def search_params(request):
                 context['events_count'] = events_count
                 context['timelines_count'] = timelines_count
         elif parameter == 'Событие':
-            events = sorted(Event.objects.filter(name__icontains=text, user=User.objects.get(name='admin')))
+            events = sorted(Event.objects.filter(name__icontains=text, user=User.objects.get(username='admin')))
             context['search_result'] = events
         else:
-            if text.isalpha():
-                events = sorted(Event.objects.filter(name__icontains=text, user=User.objects.get(name='admin')))
-                events_result = []
-                if parameter == 'Год':
-                    if text.isdigit():
-                        for event in events:
-                            if int(text) >= event.year_start and int(text) <= event.year_end:
-                                events_result.append(event)
-                else:
+            events = sorted(Event.objects.filter(name__icontains=text, user=User.objects.get(username='admin')))
+            events_result = []
+            if parameter == 'Год':
+                if text.isdigit():
+                    for event in events:
+                        if int(text) >= event.year_start and int(text) <= event.year_end:
+                            events_result.append(event)
+            else:
+                if text.isalpha():
                     events_result = Event.objects.filter(content__icontains=text)
 
                 context['search_result'] = events_result
