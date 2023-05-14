@@ -130,10 +130,13 @@ def registration(request):
 
 
 def open_tl(request, timeline_id):
-    tl = Timeline.objects.get(pk=timeline_id)
+    try:
+        tl = Timeline.objects.get(pk=timeline_id)
+    except:
+        return render(request, 'not_found.html', context={'what': 'тайм-лайна'})
     if tl.is_private:
         if request.user != tl.user:
-            return redirect('home', permanent=True)
+            return render(request, 'not_found.html', context={'what': 'тайм-лайна'})
     tl_master = tl.user
     events = sorted(Event.objects.filter(timeline_id=timeline_id))
     context = {
@@ -155,12 +158,15 @@ def open_tl(request, timeline_id):
 
 
 def open_event(request, event_id):
-    event = Event.objects.get(pk=event_id)
-    tl_pk = event.timeline.pk
-    tl = Timeline.objects.get(pk=tl_pk)
+    try:
+        event = Event.objects.get(pk=event_id)
+        tl_pk = event.timeline.pk
+        tl = Timeline.objects.get(pk=tl_pk)
+    except:
+        return render(request, 'not_found.html', context={'what': 'события'})
     if tl.is_private:
         if request.user != event.user:
-            return redirect('home', permanent=True)
+            return render(request, 'not_found.html', context={'what': 'события'})
     tl_master = event.user
     context = {
         'event': event
