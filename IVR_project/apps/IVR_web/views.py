@@ -535,7 +535,10 @@ def edit(request):  # Редактирование тайм-лайна или с
             tl.year_start = int(request.POST.get('year_start'))
             tl.day_end = day_to_num(request.POST.get('day_end'))
             tl.month_end = month_to_num(request.POST.get('month_end'))
-            tl.year_end = int(request.POST.get('year_end'))
+            if request.POST.get('year_end') == '':
+                tl.year_end = 72766797
+            else:
+                tl.year_end = int(request.POST.get('year_end'))
             tl.content = request.POST.get('content')
             tl.save()
             return redirect(f'{tl.get_absolute_url()}')
@@ -551,7 +554,10 @@ def edit(request):  # Редактирование тайм-лайна или с
             ev.year_start = int(request.POST.get('year_start'))
             ev.day_end = day_to_num(request.POST.get('day_end'))
             ev.month_end = month_to_num(request.POST.get('month_end'))
-            ev.year_end = int(request.POST.get('year_end'))
+            if request.POST.get('year_end') == '':
+                ev.year_end = 72766797
+            else:
+                ev.year_end = int(request.POST.get('year_end'))
             ev.content = request.POST.get('content')
             ev.save()
             return redirect(f'{ev.get_absolute_url()}')

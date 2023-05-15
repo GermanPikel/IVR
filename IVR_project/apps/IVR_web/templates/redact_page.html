@@ -66,7 +66,7 @@
                     </div>
                     <div class="date">
                         <p>Год окончания</p>
-                        <input type="number" value="{{ year_end }}" name="year_end">
+                        <input type="number" {% if year_end != 72766797 %} value="{{ year_end }}" {% endif %} name="year_end">
                         {% if redact_tl %}
                             <p style="font-size: 12px;">Оставьте это поле пустым, если тайм-лайн длится и по сей день</p>
                         {% else %}
