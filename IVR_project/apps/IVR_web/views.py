@@ -576,7 +576,7 @@ def to_merge(request): # Отображение страницы слияния 
     if request.user.is_authenticated:
         context['user_'] = request.user
 
-    timelines = Timeline.objects.filter(user=request.user)
+    timelines = sorted(Timeline.objects.filter(user=request.user))
     context['timelines'] = timelines
 
     return render(request, 'merge.html', context)
@@ -590,6 +590,11 @@ def merging(request):  # Слияние тайм-лайнов
     context['content'] = content
     context['timelines'] = Timeline.objects.filter(user=request.user)
     tls_to_merge = request.POST.getlist('to_merge')
+    privacy = request.POST.get('privacy')
+    if privacy == 'on':
+        privacy = True
+    else:
+        privacy = False
     if name == '' or content == '' or len(request.FILES) == 0:
         context['error'] = 'Заполните все обязательные поля'
         return render(request, 'merge.html', context)
@@ -606,7 +611,7 @@ def merging(request):  # Слияние тайм-лайнов
     merged_tl = Timeline.objects.create(name=name, photo=request.FILES.get('photo'), day_start=first_tl.day_start,
                                         month_start=first_tl.month_start, year_start=first_tl.year_start,
                                         day_end=last_tl.day_end, month_end=last_tl.month_end,
-                                        year_end=last_tl.year_end, content=content, user=request.user, is_private=False)
+                                        year_end=last_tl.year_end, content=content, user=request.user, is_private=privacy)
     merged_pk = merged_tl.pk
     for i in tls_to_merge:
         evs = Event.objects.filter(timeline=Timeline.objects.get(pk=int(i)))
