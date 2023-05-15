@@ -18,10 +18,10 @@ from IVR_project.apps.IVR_web.forms import *
 
 
 def pageNotFound(request, exception):
-    return HttpResponseNotFound('<h2>страница не найдена(((</h2>')  # будет работать только при DEBUG=False
+    return HttpResponseNotFound('<h2>страница не найдена</h2>')
 
 
-def main_page(request):
+def main_page(request):  # Отображение главной страницы. Выбран "сжатый" тайм-лайн
     user = User.objects.get(username='admin')
     user_ident = user.pk
     timelines = sorted(Timeline.objects.filter(user=user_ident, is_private=0))
@@ -40,7 +40,7 @@ def main_page(request):
     return render(request, 'main_page.html', context)
 
 
-def main_page_detailed(request):
+def main_page_detailed(request): # Отображение главной страницы. Выбран "подробный" тайм-лайн
     user = User.objects.get(username='admin')
     user_ident = user.pk
     public_timelines = sorted(Timeline.objects.filter(user=user_ident, is_private=0))
@@ -71,11 +71,11 @@ def main_page_detailed(request):
     return render(request, 'main_page.html', context)
 
 
-def open_login(request):
+def open_login(request):  # Отображение страницы для входа в аккаунт
     return render(request, 'login.html', context={})
 
 
-def login_(request):
+def login_(request):  # Вход в аккаунт
     username = request.POST.get('username')
     password = request.POST.get('password')
     if User.objects.filter(username=username).exists():
@@ -94,11 +94,11 @@ def login_(request):
     return render(request, 'login.html', context)
 
 
-def open_reg(request):
+def open_reg(request):  # Отображение страницы для регистрации
     return render(request, 'registration.html', context={})
 
 
-def registration(request):
+def registration(request):  # Регистрация пользователя
     username = request.POST.get('username')
     email = request.POST.get('email')
     password = request.POST.get('password')
@@ -133,7 +133,7 @@ def registration(request):
     return render(request, 'registration.html', context)
 
 
-def open_tl(request, timeline_id):
+def open_tl(request, timeline_id):  # Просмотр страницы тайм-лайна
     try:
         tl = Timeline.objects.get(pk=timeline_id)
     except:
@@ -161,7 +161,7 @@ def open_tl(request, timeline_id):
     return render(request, 'timeline.html', context)
 
 
-def open_event(request, event_id):
+def open_event(request, event_id):  # Просмотр страницы события
     try:
         event = Event.objects.get(pk=event_id)
         tl_pk = event.timeline.pk
@@ -189,7 +189,7 @@ def open_event(request, event_id):
     return render(request, 'event.html', context)
 
 
-def profile(request, username):
+def profile(request, username):  # Просмотр страницы пользователя
     user_ = User.objects.get(username=username)
     context = {}
     if user_ == request.user:
@@ -217,7 +217,7 @@ def profile(request, username):
     return render(request, 'profile.html', context)
 
 
-def logout_(request):
+def logout_(request):  # Выход из аккаунта
     logout(request)
     user = User.objects.get(username='admin')
     user_ident = user.pk
@@ -227,10 +227,9 @@ def logout_(request):
         'user_': request.user.is_authenticated
     }
     return redirect('home', permanent=True)
-    # return render(request, 'main_page.html', context)
 
 
-def search_params(request):
+def search_params(request):  # Результаты поиска
     context = {}
 
     if request.user.is_authenticated:
@@ -267,11 +266,16 @@ def search_params(request):
 
             context['search_result'] = events_result
 
+    if request.POST.get('message'):
+        email = request.POST.get('email')
+        theme = request.POST.get('theme')
+        message = request.POST.get('message')
+        send_feedback(email, theme, message)
 
     return render(request, 'search_result_page.html', context)
 
 
-def create_tl(request):
+def create_tl(request):  # Создание тайм-лайна и/или события
 
     def check_ev_date():
         cd = form.cleaned_data
@@ -408,7 +412,7 @@ def create_tl(request):
 
 
 @login_required(login_url=reverse_lazy('login'))
-def copy(request):
+def copy(request):  # Копирование тайм-лайна в профиль
     copied_pk = request.POST.get('hide')
     copied_tl = Timeline.objects.get(pk=copied_pk)
     copied_events = Event.objects.filter(timeline=copied_pk)
@@ -432,7 +436,7 @@ def copy(request):
     return redirect(f'/timeline/{copied_pk}')
 
 
-def redact(request):
+def redact(request):  # Взаимодействие с формой, где на выбор кнопки "Удалить", "Редактировать", "Добавить событие"(только в тайм-лайне)
     te = request.POST.get('te')
     pk = request.POST.get('hide')
     action = request.POST.get('smbt')
@@ -510,7 +514,7 @@ def redact(request):
     return render(request, 'redact_page.html', context)
 
 
-def edit(request):
+def edit(request):  # Редактирование тайм-лайна или события
 
     if request.POST.get('message'):
         email = request.POST.get('email')
@@ -554,7 +558,7 @@ def edit(request):
     return HttpResponse(f'{pk_to, t_e}')
 
 
-def to_merge(request):
+def to_merge(request): # Отображение страницы слияния тайм-лайнов
     context = {
 
     }
@@ -567,7 +571,7 @@ def to_merge(request):
     return render(request, 'merge.html', context)
 
 
-def merging(request):
+def merging(request):  # Слияние тайм-лайнов
     context = {'user_': request.user}
     name = request.POST.get('name')
     content = request.POST.get('content')
