@@ -82,7 +82,7 @@
             {% if redact_tl %}
                 <div class="create_inputs">
                      <label >
-                    <input type="checkbox" name="privacy" value="{{ is_private }}">
+                    <input type="checkbox" name="privacy" {% if is_private %} checked value="{{ is_private }}"{% else %} value="f" {% endif %}>
                     Приватный
                 </label>
                 </div>

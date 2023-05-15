@@ -540,6 +540,11 @@ def edit(request):  # Редактирование тайм-лайна или с
             else:
                 tl.year_end = int(request.POST.get('year_end'))
             tl.content = request.POST.get('content')
+            pr = request.POST.get('privacy')
+            if request.POST.get('privacy'):
+                tl.is_private = True
+            else:
+                tl.is_private = False
             tl.save()
             return redirect(f'{tl.get_absolute_url()}')
     else:
