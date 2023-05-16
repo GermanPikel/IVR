@@ -297,10 +297,28 @@ def create_tl(request):  # Создание тайм-лайна и/или соб
                     context['date_error'] = 'Даты начала и окончания события должны соответствовать тайм-лайну'
                 else:
                     context['date_error'] = None
-
+        elif ns1 > ne1:
+            context['date_error'] = 'Введены недопустимые временные рамки'
         else:
             context['date_error'] = None
         Event.objects.filter(pk=te.pk).delete()
+
+    def check_tl_date():
+        cd = form.cleaned_data
+        sd, sm, sy, ed, em, ey = cd['day_start'], cd['month_start'], cd['year_start'], cd['day_end'], cd['month_end'], \
+                                 cd['year_end']
+        te = Timeline.objects.create(user=request.user, day_start=sd, month_start=sm, year_start=sy,
+                                  day_end=ed, month_end=em, year_end=ey, content=' ',
+                                  photo=' ', is_private=cd['is_private'])
+
+        ns1 = te.get_num_start()
+        ne1 = te.get_num_end()
+
+        if (ns1 > ne1):
+            context['date_error'] = 'Введены недопустимые временные рамки'
+        else:
+            context['date_error'] = None
+        Timeline.objects.filter(pk=te.pk).delete()
 
     context = {}
     hidden = request.POST.get('hide')
@@ -311,6 +329,11 @@ def create_tl(request):  # Создание тайм-лайна и/или соб
         if request.method == 'POST':
             form = AddTimeline(request.POST, request.FILES)
             if form.is_valid():
+                check_tl_date()
+                if context['date_error']:
+                    form = AddTimeline()
+                    context['form'] = form
+                    return render(request, 'create_tl.html', context)
                 cd = form.cleaned_data
                 if cd['year_end'] is None:
                     cd['year_end'] = 72766797
